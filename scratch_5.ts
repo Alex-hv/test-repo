@@ -16,11 +16,6 @@ export class ItemsState {
   }
 
   @Selector()
-  static paginationLoading(state: ItemsStateModel): boolean {
-    return state.paginationLoading;
-  }
-
-  @Selector()
   static errorCode(state: ItemsStateModel): number | void {
     return state?.error?.code;
   }
@@ -28,10 +23,11 @@ export class ItemsState {
   @Action(LoadItems, { cancelUncompleted: true })
   loadItems<T>(
     ctx: StateContext<ItemsStateModel>,
-    { itemId, payload }: LoadItems<null>,
+    { itemId, payload }: LoadItems<T>,
   ): Observable<ListResponse<Item>> {
     const state = ctx.getState();
-    const searchParams: ISearchParams<T> = state.searchParams || {};
+      
+    const searchParams: ISearchParams = {};
     searchParams.pagination = { pageNumber: 1, size: 100 };
     if (payload.sort) {
       searchParams.sort = payload.sort;
@@ -39,8 +35,8 @@ export class ItemsState {
     if (payload.filter) {
       searchParams.filter = payload.filter;
     }
-
     ctx.patchState({ loading: true, error: null });
+
     return this.itemsApiService.getItemsList(itemId, payload).pipe(
       tap((items: ListResponse<Item>) => {
         ctx.patchState({ listItems: items, loading: false });
