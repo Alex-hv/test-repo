@@ -31,7 +31,7 @@ export class ItemsState {
     { itemId, payload }: LoadItems<null>,
   ): Observable<ListResponse<Item>> {
     const state = ctx.getState();
-    const searchParams: ISearchParams<any> = state.searchParams || {};
+    const searchParams: ISearchParams<T> = state.searchParams || {};
     searchParams.pagination = { pageNumber: 1, size: 100 };
     if (payload.sort) {
       searchParams.sort = payload.sort;
