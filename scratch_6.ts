@@ -6,6 +6,9 @@ export interface Page {
   id: number;
 }
 
+// Please see https://github.com/Alex-hv/test-repo/blob/main/Honcharov_Oleksandr_attachment_CV_1.pdf 
+// to have a better context of what this file is about
+
 @Injectable()
 export class AppInitializerService {
 
